@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h3>Your Watchlist</h3>
+    <ul>
+    {% for item in items %}
+        <li><a href="{% url 'listing_view' item.id %}">{{ item.name }}</a></li>
+    {% endfor %}  
+
+    <form action="{% url 'removeWatch' %}" method = "POST">
+        {% csrf_token %}
+         <select name="items" style="width:100px; margin-top: 30px;margin-bottom: 15px;">
+             {% for item in items %}
+                 <option value="{{item.id}}">{{item.name}}</option>
+             {% endfor %}
+         </select><br>
+         <input type="Submit" value="Remove From Watchlist" style="background-color:  rgb(47, 165, 238); color:white;">
+     </form>
+ 
+{% endblock %}

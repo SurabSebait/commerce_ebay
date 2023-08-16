@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Watchlist</title>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+            {% if message %}
+                <h2>{{message}}</h2>
+            {% endif %}
+        {% endif %}
+        {% if not user.is_authenticated %}
+            <h2>First, Log in</h2>
+        {% endif %}
+    </body>
+</html>

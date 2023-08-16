@@ -1,0 +1,71 @@
+
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if name %}
+        <h2>Congratulations {{name}}!!!</h2>
+        <h4>You have won the {{list.name}}</h4>
+    {% endif %}
+
+    {% if message %}
+        <h3>{{message}}</h3>
+    {% endif %}
+    
+
+    {% if not name %}
+        {% if not message %}
+            <h4>Listing: {{ list.name }}</h4>
+            <img src="{{list.image}}" alt="The product image" width="300">
+            <h6>{{list.desc}}</h6>
+            <h5>Minimum Bidding price(in Ruppees):{{ list.price }}</h5>
+            {% for item in bidder %}
+                {% if item.username != list.name2 %}
+                    {% if item.price == list.price %}
+                        <p>Last maximum bidder: {{item.username}}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <form action = "{% url 'Bid' list.id %}" method = "POST">{% csrf_token %}
+                <input type="text" placeholder="Place your bid" name = "bid" style = "width:900px;"><br>
+                <input type = "submit" value = "Place Bid" style="background-color: rgb(47, 165, 238); color:white; margin-top:10px; margin-bottom: 10px;">
+            </form>
+            <h5>Details:</h5>
+            <ul>
+                <li>Listed by: {{list.name2 }}</li>
+                <li>Category: {{ list.category }} </li>
+            </ul>
+            
+            <h4>Add comments</h4>
+            <form action="{% url 'comments' list.id %}" method = "POST">{% csrf_token %}
+                <input type="text" name = "comment" placeholder="Write your comment"><br>
+                <input type="submit" value = "submit" style="background-color: rgb(47, 165, 238); color:white; margin-top:10px;">
+            </form>
+            <ul>
+            {% for prod in list1 %}
+                <li>{{prod}}</li>
+            {% endfor %}
+            </ul>
+
+            {% if list.name2 == current_user %}
+                <a href="{% url 'closeBid' list.id %}"><button style = "background-color: rgb(47, 165, 238); color:white;">Close Listing</button></a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
